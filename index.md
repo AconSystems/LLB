@@ -1,4 +1,4 @@
-# Küss meinen Schnabel Baby
+# Küss meinen Schnabel meine LLB Süssigkeit
 
 <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;">
   <a href="./gate.html">
