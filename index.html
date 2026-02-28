@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Prompt Maschine • Test</title>
+  <link rel="icon" href="./assets/icons/icon-192.png" />
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #ffffff;
+    }
+    .wrap {
+      min-height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: #111;
+      text-align: center;
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+    .duck {
+      width: min(520px, 86vw);
+      height: auto;
+      display: block;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-drag: none;
+      filter: drop-shadow(0 12px 24px rgba(0,0,0,0.20));
+    }
+    .txt {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .hint {
+      font-size: 14px;
+      color: #666;
+      margin-top: -6px;
+    }
+    a { color: inherit; text-decoration: none; }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <div class="card">
+      <a href="./gate.html" aria-label="Zur Passwortseite">
+        <img class="duck" src="./assets/bluegans.png" alt="Blaue Gans" />
+      </a>
+      <div class="txt">Küss meinen Schnabel</div>
+      <div class="hint">Klick auf die Gans</div>
+    </div>
+  </main>
+</body>
+</html>

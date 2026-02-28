@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#111215" />
+  <title>Prompt Maschine • Passwort</title>
+  <link rel="icon" href="./assets/icons/icon-192.png" />
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #0b0c0f;
+      color: #fff;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    .wrap {
+      min-height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+    .card {
+      width: min(440px, 96vw);
+      background: #111215;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.55);
+    }
+    .title {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 0 0 10px 0;
+      letter-spacing: 0.3px;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    input {
+      flex: 1;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: #0b0c0f;
+      color: #fff;
+      outline: none;
+      font-size: 15px;
+    }
+    button {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: #1a1c22;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .err {
+      margin-top: 10px;
+      min-height: 18px;
+      color: #ff7a7a;
+      font-size: 13px;
+    }
+    .sub {
+      margin-top: 8px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.35;
+    }
+    .links {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 14px;
+      font-size: 12px;
+    }
+    a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <section class="card" aria-label="Passwort Eingabe">
+      <h1 class="title">Passwort eingeben</h1>
+      <div class="row">
+        <input id="pw" type="password" autocomplete="current-password" placeholder="Passwort" />
+        <button id="go" type="button">Start</button>
+      </div>
+      <div id="err" class="err"></div>
+      <div class="sub">
+        Hinweis: Das ist nur eine kleine Hürde für Zufallsbesucher. GitHub Pages ist grundsätzlich öffentlich.
+      </div>
+      <div class="links">
+        <a href="./index.html">Zurück</a>
+        <a href="./app.html">Direkt zur App</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const TOKEN_KEY = "PM_UNLOCK_OK";
+    const HASH = "715f22ab468029cfed9feb0f7aafc0642f20a48edde4a8e5bb27ef11bf609819";
+
+    function hexFromBuffer(buf){
+      const bytes = new Uint8Array(buf);
+      let hex = "";
+      for (let i = 0; i < bytes.length; i++) {
+        hex += bytes[i].toString(16).padStart(2, "0");
+      }
+      return hex;
+    }
+
+    async function sha256Hex(text){
+      const enc = new TextEncoder().encode(text);
+      const digest = await crypto.subtle.digest("SHA-256", enc);
+      return hexFromBuffer(digest);
+    }
+
+    function goApp(){
+      location.href = "./app.html";
+    }
+
+    async function tryUnlock(){
+      const err = document.getElementById("err");
+      err.textContent = "";
+      const v = (document.getElementById("pw").value || "").trim();
+      if (!v) {
+        err.textContent = "Passwort fehlt";
+        return;
+      }
+      const h = await sha256Hex(v);
+      if (h === HASH) {
+        localStorage.setItem(TOKEN_KEY, "1");
+        goApp();
+      } else {
+        err.textContent = "Falsches Passwort";
+      }
+    }
+
+    document.getElementById("go").addEventListener("click", tryUnlock);
+    document.getElementById("pw").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") tryUnlock();
+    });
+
+    // bereits freigeschaltet
+    try {
+      if (localStorage.getItem(TOKEN_KEY) === "1") goApp();
+    } catch (_) {}
+  </script>
+</body>
+</html>

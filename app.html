@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#111215" />
+  <script>
+    try {
+      if (localStorage.getItem("PM_UNLOCK_OK") !== "1") {
+        // wenn nicht freigeschaltet, zur Passwortseite
+        location.replace("./gate.html");
+      }
+    } catch (_) {
+      location.replace("./gate.html");
+    }
+  </script>
+  <title>Prompt Maschine • Builder</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./assets/icons/icon-192.png" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <header class="builderbar">
+    <div class="builderbar__left">
+      <img class="builderbar__icon" src="./assets/icons/icon-512.png" alt="" />
+      <div class="builderbar__title">
+        <span class="builderbar__titleMain">PROMPT MASCHINE</span>
+        <span class="builderbar__titleSep"> - </span>
+        <span class="builderbar__titleSub">Suno Prompt Generator</span>
+      </div>
+    </div>
+
+    <div class="builderbar__right">
+      <button class="btn btn--primary" id="randomBtn" type="button">Zufall Generator</button>
+      <button class="btn btn--ghost" id="resetAllBtn" type="button">Reset All</button>
+    </div>
+  </header>
+
+  <main class="page page--builder">
+    <section class="section">
+      <div class="section__titleRow">
+        <h2 class="section__title">Grundfunktionen</h2>
+        <div class="section__sub">Punkt 1 bis 15</div>
+      </div>
+      <div id="cardsBase" class="cards"></div>
+    </section>
+
+    <section class="section">
+      <div class="section__titleRow">
+        <h2 class="section__title">Spezialblöcke</h2>
+        <div class="section__sub">Punkt 16 bis 27</div>
+      </div>
+      <div id="cardsSpecial" class="cards"></div>
+    </section>
+
+    <section class="outputs">
+      <div class="out">
+        <div class="out__head">
+          <div class="out__title">A Styles</div>
+          <div class="out__count"><span id="countStyles">0</span>/1000</div>
+        </div>
+        <textarea id="outStyles" class="out__area" maxlength="1000" readonly></textarea>
+        <div class="out__btns">
+          <button class="btn btn--primary" type="button" data-copy="styles">Copy</button>
+          <button class="btn" type="button" data-clear="styles">Clear</button>
+        </div>
+      </div>
+
+      <div class="out">
+        <div class="out__head">
+          <div class="out__title">B Exclude Styles</div>
+          <div class="out__count"><span id="countExclude">0</span>/1000</div>
+        </div>
+        <textarea id="outExclude" class="out__area" maxlength="1000" readonly></textarea>
+        <div class="out__btns">
+          <button class="btn btn--primary" type="button" data-copy="exclude">Copy</button>
+          <button class="btn" type="button" data-clear="exclude">Clear</button>
+        </div>
+      </div>
+
+      <div class="out">
+        <div class="out__head">
+          <div class="out__title">C Songaufbau Bausteine für Lyrics</div>
+          <div class="out__count"><span id="countSongbuild">0</span>/500</div>
+        </div>
+        <textarea id="outSongbuild" class="out__area" maxlength="500" readonly></textarea>
+        <div class="out__note">Songaufbau Bausteine in eckigen Klammern. Diese Zeile kommt ins Lyrics Feld ganz oben vor den Lyrics.</div>
+        <div class="out__btns">
+          <button class="btn btn--primary" type="button" data-copy="songbuild">Copy</button>
+          <button class="btn" type="button" data-clear="songbuild">Clear</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer footer--left">
+      <img class="footer__icon" src="./assets/icons/icon-512.png" alt="" />
+      <div id="footerVersion">AconSystems</div>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="./app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(()=>{});
+  </script>
+</body>
+</html>
